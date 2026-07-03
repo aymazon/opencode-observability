@@ -13,7 +13,9 @@ import { SessionTopBar } from "./_components/session-top-bar";
 import { useMessageNavigation } from "./_hooks/use-message-navigation";
 import { useOpenDetails } from "./_hooks/use-open-details";
 import { useSessionPreferences } from "./_hooks/use-session-preferences";
-import { applyOmoFilter, detectOmoContent } from "./_lib/omo-filter";
+import { detectClaudeFilterContent } from "./_lib/claude-filter";
+import { applySessionMessageFilters } from "./_lib/message-filters";
+import { detectOmoContent } from "./_lib/omo-filter";
 
 // ---------------------------------------------------------------------------
 // Keyboard shortcuts for session detail (Ctrl/Cmd + key)
@@ -208,6 +210,7 @@ export function SessionDetailPage(): React.ReactElement | null {
       toolsVisible,
       sidebarOpen,
       omoFilter,
+      claudeFilter,
     },
     {
       toggleCollapse,
@@ -216,6 +219,7 @@ export function SessionDetailPage(): React.ReactElement | null {
       toggleTools,
       toggleSidebar,
       toggleOmoFilter,
+      toggleClaudeFilter,
     },
   ] = useSessionPreferences({
     getAnchor: getAnchorNoop,
@@ -229,14 +233,27 @@ export function SessionDetailPage(): React.ReactElement | null {
     () => detectOmoContent(messages),
     [messages],
   );
+  const hasClaudeFilterContent = React.useMemo(
+    () => data?.harness.id === "claude" && detectClaudeFilterContent(messages),
+    [data?.harness.id, messages],
+  );
 
   // Filtered messages count (accounts for omo + role filter)
   const visibleCount = React.useMemo(() => {
-    const list =
-      omoFilter && hasOmoContent ? applyOmoFilter(messages) : messages;
+    const list = applySessionMessageFilters(messages, {
+      omo: omoFilter && hasOmoContent,
+      claude: claudeFilter && hasClaudeFilterContent,
+    });
     if (filterMode === "all") return list.length;
     return list.filter((m) => m.role === filterMode).length;
-  }, [messages, filterMode, omoFilter, hasOmoContent]);
+  }, [
+    messages,
+    filterMode,
+    omoFilter,
+    hasOmoContent,
+    claudeFilter,
+    hasClaudeFilterContent,
+  ]);
 
   // Navigation
   const { navIndex, jump: jumpMessage } = useMessageNavigation({
@@ -329,7 +346,7 @@ export function SessionDetailPage(): React.ReactElement | null {
 
   // Delete session (capability-gated)
   const handleDelete = React.useCallback(async () => {
-    if (!data || !data.harness.capabilities.delete) return;
+    if (!data?.harness.capabilities.delete) return;
     if (
       !window.confirm(
         "\u3053\u306E\u30BB\u30C3\u30B7\u30E7\u30F3\u3068\u30B5\u30D6\u30A8\u30FC\u30B8\u30A7\u30F3\u30C8\u30BB\u30C3\u30B7\u30E7\u30F3\u3092\u524A\u9664\u3057\u307E\u3059\u304B\uFF1F\n\u3053\u306E\u64CD\u4F5C\u306F\u53D6\u308A\u6D88\u305B\u307E\u305B\u3093\u3002",
@@ -410,6 +427,9 @@ export function SessionDetailPage(): React.ReactElement | null {
         hasOmoContent={hasOmoContent}
         omoFilter={omoFilter}
         onToggleOmoFilter={toggleOmoFilter}
+        hasClaudeFilterContent={hasClaudeFilterContent}
+        claudeFilter={claudeFilter}
+        onToggleClaudeFilter={toggleClaudeFilter}
       />
 
       <div className="flex-1 flex overflow-hidden relative">
@@ -418,6 +438,7 @@ export function SessionDetailPage(): React.ReactElement | null {
             messages={data.messages}
             filterMode={filterMode}
             omoFilter={omoFilter && hasOmoContent}
+            claudeFilter={claudeFilter && hasClaudeFilterContent}
             toolsVisible={toolsVisible}
             plainMode={plainMode}
             collapseEnabled={collapseEnabled}

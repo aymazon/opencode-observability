@@ -3,14 +3,15 @@ import type { SessionMessageContract } from "../../../../src/contracts/session.j
 import { type ChatWidth, getChatWidth } from "../../../lib/chat-width-context";
 import { cn } from "../../../lib/cn";
 import type { FilterMode } from "../_lib/constants";
+import { applySessionMessageFilters } from "../_lib/message-filters";
 import { hasVisibleMessageContent } from "../_lib/message-visibility";
-import { applyOmoFilter } from "../_lib/omo-filter";
 import { MessageRow } from "./message-row";
 
 export interface MessageListProps {
   messages: SessionMessageContract[];
   filterMode: FilterMode;
   omoFilter: boolean;
+  claudeFilter: boolean;
   toolsVisible: boolean;
   plainMode: boolean;
   collapseEnabled: boolean;
@@ -21,20 +22,23 @@ export interface MessageListProps {
 
 /**
  * Builds the visible message list with original indices preserved.
- * When omoFilter is enabled, synthetic OMO messages are removed and
- * OMO-prefixed user messages have their prefix stripped.
+ * Enabled synthetic-message filters are applied before the role filter.
  */
 function useFilteredMessages(
   messages: SessionMessageContract[],
   filterMode: FilterMode,
   omoFilter: boolean,
+  claudeFilter: boolean,
 ): Array<{ msg: SessionMessageContract; originalIdx: number }> {
   return React.useMemo(() => {
-    const source = omoFilter ? applyOmoFilter(messages) : messages;
+    const source = applySessionMessageFilters(messages, {
+      omo: omoFilter,
+      claude: claudeFilter,
+    });
     return source
       .map((msg, idx) => ({ msg, originalIdx: idx }))
       .filter(({ msg }) => filterMode === "all" || msg.role === filterMode);
-  }, [messages, filterMode, omoFilter]);
+  }, [messages, filterMode, omoFilter, claudeFilter]);
 }
 
 /**
@@ -45,6 +49,7 @@ export function MessageList({
   messages,
   filterMode,
   omoFilter,
+  claudeFilter,
   toolsVisible,
   plainMode,
   collapseEnabled,
@@ -52,7 +57,12 @@ export function MessageList({
   onToggleToolDetail,
   containerRef,
 }: MessageListProps): React.ReactElement {
-  const filteredMessages = useFilteredMessages(messages, filterMode, omoFilter);
+  const filteredMessages = useFilteredMessages(
+    messages,
+    filterMode,
+    omoFilter,
+    claudeFilter,
+  );
   const [chatWidth, setChatWidth] = React.useState<ChatWidth>(getChatWidth);
 
   // Listen for width changes triggered via command palette

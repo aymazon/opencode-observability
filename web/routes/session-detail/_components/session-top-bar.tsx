@@ -18,6 +18,9 @@ export interface SessionTopBarProps {
   hasOmoContent: boolean;
   omoFilter: boolean;
   onToggleOmoFilter: () => void;
+  hasClaudeFilterContent: boolean;
+  claudeFilter: boolean;
+  onToggleClaudeFilter: () => void;
 }
 
 const copyBtnBase = cn(
@@ -43,6 +46,9 @@ export const SessionTopBar = React.memo(function SessionTopBar({
   hasOmoContent,
   omoFilter,
   onToggleOmoFilter,
+  hasClaudeFilterContent,
+  claudeFilter,
+  onToggleClaudeFilter,
 }: SessionTopBarProps) {
   const copyBtnClass = cn(
     copyBtnBase,
@@ -111,6 +117,49 @@ export const SessionTopBar = React.memo(function SessionTopBar({
                 {!omoFilter ? <path d="M13 3L3 13" strokeWidth="2" /> : null}
               </svg>
               <span className="font-[var(--font-mono)] leading-none">OMO</span>
+            </button>
+          ) : null}
+
+          {hasClaudeFilterContent ? (
+            <button
+              type="button"
+              className={cn(
+                "h-[22px] px-1.5",
+                "rounded-[var(--radius-sm)]",
+                "border",
+                "text-[0.7em] font-medium tracking-[0.02em]",
+                "inline-flex items-center gap-1",
+                "cursor-pointer transition-all duration-[var(--transition-fast)]",
+                "select-none",
+                claudeFilter
+                  ? "bg-[var(--color-accent)] text-[var(--color-text-inverse)] border-[var(--color-accent)]"
+                  : "bg-[var(--color-bg-elevated)] text-[var(--color-text-tertiary)] border-[var(--color-border-default)] hover:border-[var(--color-accent)] hover:text-[var(--color-text-secondary)]",
+              )}
+              onClick={onToggleClaudeFilter}
+              title={
+                claudeFilter
+                  ? "Claudeフィルタ ON（Claude Codeの自動通知を非表示）"
+                  : "Claudeフィルタ OFF（すべて表示）"
+              }
+              data-testid="btn-claude-filter"
+            >
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M1.5 3h13M3.5 6.5h9M5.5 10h5M7 13.5h2" />
+                {!claudeFilter ? <path d="M13 3L3 13" strokeWidth="2" /> : null}
+              </svg>
+              <span className="font-[var(--font-mono)] leading-none">
+                Claude
+              </span>
             </button>
           ) : null}
 
