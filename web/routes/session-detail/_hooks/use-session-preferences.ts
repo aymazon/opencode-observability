@@ -35,6 +35,7 @@ export interface SessionPreferences {
   toolsVisible: boolean;
   sidebarOpen: boolean;
   omoFilter: boolean;
+  claudeFilter: boolean;
 }
 
 export interface SessionPreferenceActions {
@@ -44,6 +45,7 @@ export interface SessionPreferenceActions {
   toggleTools: () => void;
   toggleSidebar: () => void;
   toggleOmoFilter: () => void;
+  toggleClaudeFilter: () => void;
 }
 
 export function useSessionPreferences(
@@ -78,6 +80,9 @@ export function useSessionPreferences(
   const [omoFilter, setOmoFilter] = React.useState(
     () => readPref("ot-omo", "true") !== "false",
   );
+  const [claudeFilter, setClaudeFilter] = React.useState(
+    () => readPref("ot-claude-filter", "true") !== "false",
+  );
 
   // --- Persist preferences ---
   React.useEffect(() => {
@@ -98,6 +103,9 @@ export function useSessionPreferences(
   React.useEffect(() => {
     writePref("ot-omo", String(omoFilter));
   }, [omoFilter]);
+  React.useEffect(() => {
+    writePref("ot-claude-filter", String(claudeFilter));
+  }, [claudeFilter]);
 
   // --- Control actions ---
   const togglePlain = React.useCallback(() => {
@@ -142,6 +150,15 @@ export function useSessionPreferences(
     });
   }, [getAnchor, restoreAnchor]);
 
+  const toggleClaudeFilter = React.useCallback(() => {
+    const anchor = getAnchor();
+    setClaudeFilter((prev) => !prev);
+    requestAnimationFrame(() => {
+      recheckOverflowsRef.current();
+      restoreAnchor(anchor);
+    });
+  }, [getAnchor, restoreAnchor]);
+
   const preferences: SessionPreferences = {
     collapseEnabled,
     filterMode,
@@ -149,6 +166,7 @@ export function useSessionPreferences(
     toolsVisible,
     sidebarOpen,
     omoFilter,
+    claudeFilter,
   };
 
   const actions: SessionPreferenceActions = {
@@ -158,6 +176,7 @@ export function useSessionPreferences(
     toggleTools,
     toggleSidebar,
     toggleOmoFilter,
+    toggleClaudeFilter,
   };
 
   return [preferences, actions];
