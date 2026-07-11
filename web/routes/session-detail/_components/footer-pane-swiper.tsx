@@ -14,16 +14,16 @@ interface FooterPaneSwiperProps {
 }
 
 /**
- * Footer 領域の複数 pane を 1 枠で表示し、`activeIndex` に応じてスライド遷移するコンテナ。
+ * Container that displays multiple footer panes in a single frame with slide transitions based on `activeIndex`.
  *
- * pane 切替の入力検出（swipe / keyboard など）は本コンポーネント外で行い、
- * 結果として確定した `activeIndex` を props で受け取る表示専門コンポーネント。
+ * Input detection for pane switching (swipe / keyboard etc.) is done outside this component;
+ * this is a display-only component that receives the resolved `activeIndex` via props.
  *
- * 描画方式: 各 pane を absolute で重ね合わせ、`translateX((index - activeIndex) * 100%)` で
- * 水平に並べる。CSS transition で 200ms のスライド遷移。
- * 非アクティブ pane は DOM に残し pointer-events: none / aria-hidden で操作不可にする
- * （React state を保持し、textarea 入力等が pane 切替で失われないようにするため）。
- * Slot 高さは active pane の offsetHeight に追従（ResizeObserver）。
+ * Rendering approach: overlay each pane with absolute positioning, arrange horizontally using
+ * `translateX((index - activeIndex) * 100%)`. CSS transition for 200ms slide animation.
+ * Inactive panes remain in DOM with pointer-events: none / aria-hidden to prevent interaction
+ * (preserving React state so textarea input etc. is not lost during pane switching).
+ * Slot height follows active pane's offsetHeight (ResizeObserver).
  */
 export function FooterPaneSwiper({
   panes,
@@ -41,8 +41,8 @@ export function FooterPaneSwiper({
     };
   }, []);
 
-  // active pane の切替時、active pane 外に focus がある場合は blur する
-  // （textarea にフォーカスを残したまま画面が切り替わる違和感とキーボード残留を防ぐ）
+  // When switching active panes, blur if focus is outside the active pane
+  // (prevents disorientation of keeping focus in textarea and lingering keyboard state)
   React.useEffect(() => {
     const container = containerRef.current;
     if (!container) return;

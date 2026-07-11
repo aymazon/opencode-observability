@@ -44,10 +44,10 @@ export function questionToPlainText(question: SessionQuestionContract): string {
       lines.push(`  ▸ ${value}`);
     }
     if (item.selected.length === 0) {
-      lines.push("  (回答なし)");
+      lines.push("  (No answer)");
     }
     if (item.note) {
-      lines.push(`  備考: ${item.note}`);
+      lines.push(`  Note: ${item.note}`);
     }
   });
   return lines.join("\n");

@@ -41,10 +41,10 @@ function BuildingPlaceholder({ progressPercent }: { progressPercent: number }) {
     >
       <div className="flex items-center justify-between">
         <span className="text-sm text-[var(--color-text-secondary)]">
-          集計を構築中 {pct.toFixed(0)}%
+          Building aggregation {pct.toFixed(0)}%
         </span>
         <span className="text-xs text-[var(--color-text-tertiary)]">
-          しばらくお待ちください
+          Please wait
         </span>
       </div>
       <div className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--color-bg-elevated)]">
@@ -66,7 +66,7 @@ function SectionError({ title, message }: { title: string; message: string }) {
         {title}
       </h2>
       <p className="text-sm text-[var(--color-error-text)]">
-        データ取得エラー: {message}
+        Data fetch error: {message}
       </p>
     </section>
   );
@@ -198,7 +198,7 @@ function ModelsSections({
   }
 
   if (error && !data) {
-    return <SectionError title="モデル" message={error} />;
+    return <SectionError title="Models" message={error} />;
   }
 
   if (!data) return null;
@@ -244,7 +244,7 @@ function ToolsSections({
   }
 
   if (error && !data) {
-    return <SectionError title="ツール" message={error} />;
+    return <SectionError title="Tools" message={error} />;
   }
 
   if (!data) return null;

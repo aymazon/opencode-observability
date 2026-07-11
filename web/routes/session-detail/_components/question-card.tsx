@@ -46,7 +46,7 @@ export const QuestionCard = React.memo(function QuestionCard({
               "text-[var(--color-tool-pill-strong-text)]",
             )}
           >
-            🗳 質問
+            🗳 Question
           </span>
         </div>
 
@@ -94,7 +94,7 @@ export const QuestionCard = React.memo(function QuestionCard({
                   </p>
                   {item.multiSelect ? (
                     <span className="text-[0.72em] text-[var(--color-text-tertiary)]">
-                      複数選択可
+                      Multiple choice
                     </span>
                   ) : null}
                 </div>
@@ -170,7 +170,7 @@ export const QuestionCard = React.memo(function QuestionCard({
                         "text-[var(--color-text-tertiary)]",
                       )}
                     >
-                      自由記述
+                      Free text
                     </span>
                     {freeTextAnswers.map((value) => (
                       <div
@@ -208,7 +208,7 @@ export const QuestionCard = React.memo(function QuestionCard({
                     )}
                   >
                     <span className="text-[0.82em] text-[var(--color-text-tertiary)]">
-                      回答なし
+                      No answer
                     </span>
                   </div>
                 ) : null}
@@ -232,7 +232,7 @@ export const QuestionCard = React.memo(function QuestionCard({
                         "mt-[2px]",
                       )}
                     >
-                      備考
+                      Note
                     </span>
                     <span className="text-[0.85em] text-[var(--color-text-primary)]">
                       {item.note}

@@ -194,7 +194,7 @@ function claudeTranscript(options: {
       gitBranch: "main",
       message: {
         role: "user",
-        content: [{ type: "text", text: "依頼" }],
+        content: [{ type: "text", text: "Request" }],
       },
     },
     {
@@ -210,7 +210,7 @@ function claudeTranscript(options: {
           cache_read_input_tokens: options.cacheRead,
           cache_creation_input_tokens: options.cacheWrite,
         },
-        content: [{ type: "text", text: "完了" }],
+        content: [{ type: "text", text: "Complete" }],
       },
     },
     { type: "ai-title", aiTitle: "Claude root" },

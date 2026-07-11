@@ -18,16 +18,16 @@ import { sessionPath } from "../../lib/harness";
 import { DirectoryCombobox } from "./_components/directory-combobox";
 
 const SORT_LABELS: Record<HarnessSessionsSort, string> = {
-  updated: "更新順",
-  created: "作成順",
-  tokens: "トークン順",
-  messages: "メッセージ順",
+  updated: "Last updated",
+  created: "Date created",
+  tokens: "Token count",
+  messages: "Message count",
 };
 
 const SOURCE_REASON_LABELS: Record<string, string> = {
-  "missing-database": "データベースが見つかりません",
-  "missing-directory": "ディレクトリが見つかりません",
-  error: "読み込みに失敗しました",
+  "missing-database": "Database not found",
+  "missing-directory": "Directory not found",
+  error: "Failed to load",
 };
 
 const inputClasses = cn(
@@ -116,7 +116,7 @@ export function Sessions(): React.ReactElement {
       <div className="flex flex-wrap items-center gap-2">
         <div className="flex bg-[var(--color-bg-elevated)] rounded-lg p-[3px] gap-0.5">
           <HarnessChip
-            label="すべて"
+            label="All"
             count={data ? totalCount : null}
             active={harness === null}
             onClick={() => updateParams({ h: null })}
@@ -136,7 +136,7 @@ export function Sessions(): React.ReactElement {
           type="search"
           value={qInput}
           onChange={(e) => setQInput(e.target.value)}
-          placeholder="タイトルで絞り込み"
+          placeholder="Filter by title"
           className={cn(inputClasses, "flex-1 min-w-[160px] max-w-[320px]")}
           data-testid="sessions-filter-input"
         />
@@ -198,7 +198,7 @@ export function Sessions(): React.ReactElement {
             loading && "opacity-50",
           )}
         >
-          セッションがありません
+          No sessions
         </p>
       ) : (
         <div

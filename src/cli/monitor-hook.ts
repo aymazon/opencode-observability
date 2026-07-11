@@ -337,7 +337,7 @@ export async function runMonitorHook(harness: HookHarness): Promise<number> {
     (payload as Record<string, unknown>).session_id ?? "",
   );
   if (!sessionId) {
-    block("セッションIDを取得できなかったため、ビューアを開けませんでした。");
+    block("Could not get session ID, unable to open viewer.");
     return 0;
   }
 
@@ -346,17 +346,17 @@ export async function runMonitorHook(harness: HookHarness): Promise<number> {
 
   if (!(await ensureServerReady(base))) {
     block(
-      "ビューアサーバーを自動起動できませんでした。" +
-        "`npx --yes opencode-observability@latest` " +
-        `で起動後に再実行してください。(${url})`,
+      "Could not auto-start viewer server. " +
+        "Run `npx --yes opencode-observability@latest` " +
+        `to start it, then try again. (${url})`,
     );
     return 0;
   }
 
   if (await openInBrowser(url)) {
-    block(`ビューアを開きました: ${url}`);
+    block(`Opened viewer: ${url}`);
   } else {
-    block(`ブラウザを自動で開けませんでした。手動で開いてください: ${url}`);
+    block(`Could not open browser automatically. Open manually: ${url}`);
   }
 
   return 0;

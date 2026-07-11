@@ -87,7 +87,7 @@ export function DirectoryCombobox({
               <bdi>{formatDirectory(selected)}</bdi>
             </span>
           ) : (
-            <span className="truncate flex-1">すべてのディレクトリ</span>
+            <span className="truncate flex-1">All directories</span>
           )}
           <span
             aria-hidden="true"
@@ -101,17 +101,17 @@ export function DirectoryCombobox({
         align="start"
         className="w-[min(640px,calc(100vw-2rem))] p-0 overflow-hidden"
       >
-        <Command label="ディレクトリで絞り込み" filter={substringFilter}>
+        <Command label="Filter by directory" filter={substringFilter}>
           <div className="border-b border-[var(--color-border-subtle)] px-3">
             <Command.Input
               autoFocus
-              placeholder="ディレクトリを検索"
+              placeholder="Search directories"
               className="h-9 w-full bg-transparent text-[0.82em] text-[var(--color-text-primary)] outline-none placeholder:text-[var(--color-text-tertiary)]"
             />
           </div>
           <Command.List className="max-h-72 overflow-y-auto p-1.5">
             <Command.Empty className="py-4 text-center text-[0.8em] text-[var(--color-text-secondary)]">
-              該当するディレクトリがありません
+              No matching directories
             </Command.Empty>
             <Command.Item
               value={ALL_VALUE}
@@ -119,7 +119,7 @@ export function DirectoryCombobox({
               className={itemClasses}
             >
               <SelectedMark active={selected === ""} />
-              <span className="flex-1 truncate">すべてのディレクトリ</span>
+              <span className="flex-1 truncate">All directories</span>
             </Command.Item>
             {options.map((option) => (
               <Command.Item

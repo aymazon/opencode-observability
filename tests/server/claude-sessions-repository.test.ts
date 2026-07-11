@@ -42,7 +42,7 @@ describe("claude sessions repository", () => {
       path.join(subagentsDir, "agent-child.meta.json"),
       JSON.stringify({
         agentType: "Explore",
-        description: "子調査",
+        description: "Sub-research",
         toolUseId: "tool-agent",
       }),
     );
@@ -58,7 +58,7 @@ describe("claude sessions repository", () => {
         id: "agent-child",
         parentId: "parent-1",
         agentType: "Explore",
-        description: "子調査",
+        description: "Sub-research",
         toolUseId: "tool-agent",
       },
     ]);

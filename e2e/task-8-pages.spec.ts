@@ -100,7 +100,7 @@ test("Sessions page renders unified list with filters", async ({ page }) => {
 
   // Unavailable source is surfaced, not hidden
   await expect(
-    page.getByText("Claude Code: ディレクトリが見つかりません"),
+    page.getByText("Claude Code: Directory not found"),
   ).toBeVisible();
 
   // Session rows show per-harness metadata
@@ -122,7 +122,7 @@ test("Sessions page renders unified list with filters", async ({ page }) => {
   const combobox = page.getByTestId("sessions-directory-combobox");
   await expect(combobox).toBeVisible();
   await combobox.click();
-  await page.getByPlaceholder("ディレクトリを検索").fill("beta");
+  await page.getByPlaceholder("Search directories").fill("beta");
   await expect(page.getByRole("option", { name: /repo-beta/ })).toBeVisible();
   await expect(page.getByRole("option", { name: /repo-alpha/ })).toHaveCount(0);
   await page.getByRole("option", { name: /repo-beta/ }).click();

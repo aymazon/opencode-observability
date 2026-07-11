@@ -23,7 +23,7 @@ describe("parseCodexRollout", () => {
       {
         timestamp: "2026-01-01T00:00:01.000Z",
         type: "event_msg",
-        payload: { type: "user_message", message: "最初の依頼" },
+        payload: { type: "user_message", message: "First request" },
       },
       // Same prompt as response_item — must not duplicate.
       {
@@ -32,7 +32,7 @@ describe("parseCodexRollout", () => {
         payload: {
           type: "message",
           role: "user",
-          content: [{ type: "input_text", text: "最初の依頼" }],
+          content: [{ type: "input_text", text: "First request" }],
         },
       },
       // Injected context — must be dropped.
@@ -55,7 +55,7 @@ describe("parseCodexRollout", () => {
         type: "response_item",
         payload: {
           type: "reasoning",
-          summary: [{ type: "summary_text", text: "考え中" }],
+          summary: [{ type: "summary_text", text: "Thinking" }],
         },
       },
       {
@@ -104,8 +104,8 @@ describe("parseCodexRollout", () => {
           name: "update_plan",
           arguments: JSON.stringify({
             plan: [
-              { step: "調査", status: "completed" },
-              { step: "実装", status: "in_progress" },
+              { step: "Research", status: "completed" },
+              { step: "Implementation", status: "in_progress" },
             ],
           }),
           call_id: "call-3",
@@ -126,20 +126,20 @@ describe("parseCodexRollout", () => {
         payload: {
           type: "message",
           role: "assistant",
-          content: [{ type: "output_text", text: "完了しました" }],
+          content: [{ type: "output_text", text: "Completed" }],
         },
       },
       // Duplicate of the response_item assistant text at the same second.
       {
         timestamp: "2026-01-01T00:00:07.500Z",
         type: "event_msg",
-        payload: { type: "agent_message", message: "完了しました" },
+        payload: { type: "agent_message", message: "Completed" },
       },
       // Unique agent_message — kept.
       {
         timestamp: "2026-01-01T00:00:08.000Z",
         type: "event_msg",
-        payload: { type: "agent_message", message: "追加コメント" },
+        payload: { type: "agent_message", message: "Additional comment" },
       },
       {
         timestamp: "2026-01-01T00:00:09.000Z",
@@ -220,17 +220,17 @@ describe("parseCodexRollout", () => {
       },
     ]);
     expect(parsed.todos).toEqual([
-      { content: "調査", status: "completed", priority: "" },
-      { content: "実装", status: "in_progress", priority: "" },
+      { content: "Research", status: "completed", priority: "" },
+      { content: "Implementation", status: "in_progress", priority: "" },
     ]);
 
     expect(
       parsed.messages.map((message) => [message.role, message.text]),
     ).toEqual([
-      ["user", "最初の依頼"],
+      ["user", "First request"],
       ["assistant", ""],
-      ["assistant", "完了しました"],
-      ["assistant", "追加コメント"],
+      ["assistant", "Completed"],
+      ["assistant", "Additional comment"],
     ]);
 
     // Tool calls attach to the assistant shell preceding the final text.
@@ -242,7 +242,7 @@ describe("parseCodexRollout", () => {
       "exec_command",
       "update_plan",
     ]);
-    expect(shell.toolCalls[0].fullOutput).toBe("考え中");
+    expect(shell.toolCalls[0].fullOutput).toBe("Thinking");
     expect(shell.toolCalls[1]).toMatchObject({
       input: "ls -la",
       status: "completed",
@@ -275,18 +275,18 @@ describe("parseCodexRollout", () => {
             questions: [
               {
                 id: "q1",
-                header: "方針",
-                question: "どちらにしますか？",
+                header: "Approach",
+                question: "Which one will you choose?",
                 options: [
-                  { label: "案A", description: "速い" },
-                  { label: "案B", description: "安全" },
+                  { label: "Plan A", description: "Fast" },
+                  { label: "Plan B", description: "Safe" },
                 ],
               },
               {
                 id: "q2",
-                header: "確認",
-                question: "進めてよいですか？",
-                options: [{ label: "はい", description: "" }],
+                header: "Confirmation",
+                question: "May I proceed?",
+                options: [{ label: "Yes", description: "" }],
               },
             ],
           }),
@@ -302,9 +302,9 @@ describe("parseCodexRollout", () => {
           output: JSON.stringify({
             answers: {
               q1: {
-                answers: ["案A", "user_note: 補足", "None of the above"],
+                answers: ["Plan A", "user_note: Supplement", "None of the above"],
               },
-              q2: { answers: ["はい"] },
+              q2: { answers: ["Yes"] },
             },
           }),
         },
@@ -323,7 +323,7 @@ describe("parseCodexRollout", () => {
     expect(shell.toolCalls).toHaveLength(1);
     const call = shell.toolCalls[0];
     expect(call.tool).toBe("question");
-    expect(call.input).toBe("2件の質問");
+    expect(call.input).toBe("2 questions");
     expect(call.status).toBe("completed");
     // Options are preserved; "None of the above" is dropped; the user_note is
     // stripped of its prefix and lands in note, not selected. multiSelect is
@@ -331,22 +331,22 @@ describe("parseCodexRollout", () => {
     expect(call.question).toEqual({
       questions: [
         {
-          header: "方針",
-          question: "どちらにしますか？",
+          header: "Approach",
+          question: "Which one will you choose?",
           multiSelect: false,
           options: [
-            { label: "案A", description: "速い" },
-            { label: "案B", description: "安全" },
+            { label: "Plan A", description: "Fast" },
+            { label: "Plan B", description: "Safe" },
           ],
-          selected: ["案A"],
-          note: "補足",
+          selected: ["Plan A"],
+          note: "Supplement",
         },
         {
-          header: "確認",
-          question: "進めてよいですか？",
+          header: "Confirmation",
+          question: "May I proceed?",
           multiSelect: false,
-          options: [{ label: "はい", description: "" }],
-          selected: ["はい"],
+          options: [{ label: "Yes", description: "" }],
+          selected: ["Yes"],
           note: null,
         },
       ],
@@ -367,7 +367,7 @@ describe("parseCodexRollout", () => {
           name: "multi_agent_v1.spawn_agent",
           arguments: JSON.stringify({
             agent_type: "explorer",
-            message: "調査してください",
+            message: "Please investigate",
           }),
           call_id: "call-spawn",
         },

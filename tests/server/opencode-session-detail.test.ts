@@ -189,16 +189,16 @@ function seed(db: Database): void {
       input: {
         questions: [
           {
-            header: "方針",
-            question: "どの方針にしますか？",
+            header: "Approach",
+            question: "Which approach should we take?",
             options: [
-              { label: "速度優先", description: "速い" },
-              { label: "安全優先", description: "堅実" },
+              { label: "Speed first", description: "Fast" },
+              { label: "Safety first", description: "Solid" },
             ],
           },
           {
-            header: "対象",
-            question: "対象を選んでください",
+            header: "Target",
+            question: "Please select a target",
             multiple: true,
             options: [
               { label: "API", description: "" },
@@ -206,14 +206,14 @@ function seed(db: Database): void {
             ],
           },
           {
-            header: "備考",
-            question: "補足はありますか？",
-            options: [{ label: "なし", description: "" }],
+            header: "Notes",
+            question: "Do you have any additional notes?",
+            options: [{ label: "None", description: "" }],
           },
         ],
       },
       metadata: {
-        answers: [["速度優先"], ["API", "UI"], ["自由記述の回答"]],
+        answers: [["Speed first"], ["API", "UI"], ["Free-form answer"]],
       },
       time: { start: BASE + 1_300, end: BASE + 5_300 },
     },
@@ -228,9 +228,9 @@ function seed(db: Database): void {
       input: {
         questions: [
           {
-            header: "確認",
-            question: "進めてよいですか？",
-            options: [{ label: "はい", description: "" }],
+            header: "Confirmation",
+            question: "May I proceed?",
+            options: [{ label: "Yes", description: "" }],
           },
         ],
       },
@@ -267,24 +267,24 @@ describe("opencode session detail question extraction", () => {
     expect(calls[0].question).toBeNull();
 
     const answered = calls[1];
-    expect(answered.input).toBe("3件の質問");
+    expect(answered.input).toBe("3 questions");
     expect(answered.fullInput).toBe("");
     expect(answered.question).toEqual({
       questions: [
         {
-          header: "方針",
-          question: "どの方針にしますか？",
+          header: "Approach",
+          question: "Which approach should we take?",
           multiSelect: false,
           options: [
-            { label: "速度優先", description: "速い" },
-            { label: "安全優先", description: "堅実" },
+            { label: "Speed first", description: "Fast" },
+            { label: "Safety first", description: "Solid" },
           ],
-          selected: ["速度優先"],
+          selected: ["Speed first"],
           note: null,
         },
         {
-          header: "対象",
-          question: "対象を選んでください",
+          header: "Target",
+          question: "Please select a target",
           multiSelect: true,
           options: [
             { label: "API", description: "" },
@@ -294,23 +294,23 @@ describe("opencode session detail question extraction", () => {
           note: null,
         },
         {
-          header: "備考",
-          question: "補足はありますか？",
+          header: "Notes",
+          question: "Do you have any additional notes?",
           multiSelect: false,
-          options: [{ label: "なし", description: "" }],
-          selected: ["自由記述の回答"],
+          options: [{ label: "None", description: "" }],
+          selected: ["Free-form answer"],
           note: null,
         },
       ],
     });
     // fullOutput renders the canonical plain-text card.
     expect(answered.fullOutput).toContain("Q1.");
-    expect(answered.fullOutput).toContain("自由記述の回答");
+    expect(answered.fullOutput).toContain("Free-form answer");
 
     // An unanswered question keeps its options but has no selection.
     const unanswered = calls[2];
     expect(unanswered.question?.questions[0]).toMatchObject({
-      question: "進めてよいですか？",
+      question: "May I proceed?",
       multiSelect: false,
       selected: [],
       note: null,

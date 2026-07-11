@@ -31,8 +31,8 @@ function HelpButton() {
     /Mac|iPhone|iPad/.test(navigator.platform ?? navigator.userAgent);
   const modKey = isMac ? "⌘" : "Ctrl";
   const altPlatformNote = isMac
-    ? "Windows: ⌘ の代わりに Ctrl を使用"
-    : "Mac: Ctrl の代わりに Cmd を使用";
+    ? "Windows: use Ctrl instead of ⌘"
+    : "Mac: use Cmd instead of Ctrl";
 
   return (
     <PopoverPrimitive.Root>
@@ -83,7 +83,7 @@ function HelpButton() {
         >
           <div className="text-[0.78em] font-bold uppercase tracking-wider text-[var(--color-text-secondary)] mb-2">
             {
-              "\u30AD\u30FC\u30DC\u30FC\u30C9\u30B7\u30E7\u30FC\u30C8\u30AB\u30C3\u30C8"
+              "Keyboard Shortcuts"
             }
           </div>
           <table className="w-full border-collapse text-[0.8em]">
@@ -100,7 +100,7 @@ function HelpButton() {
                 </td>
                 <td className="py-0.5 align-middle">
                   {
-                    "\u6B21 / \u524D\u306E\u30E1\u30C3\u30BB\u30FC\u30B8\u3078\u30B8\u30E3\u30F3\u30D7"
+                    "Jump to next / previous message"
                   }
                 </td>
               </tr>
@@ -115,7 +115,7 @@ function HelpButton() {
                   </kbd>
                 </td>
                 <td className="py-0.5 align-middle">
-                  {"\u6298\u308A\u305F\u305F\u307F\u5207\u66FF"}
+                  {"Toggle collapse"}
                 </td>
               </tr>
               <tr>
@@ -130,7 +130,7 @@ function HelpButton() {
                 </td>
                 <td className="py-0.5 align-middle">
                   {
-                    "\u30D5\u30A3\u30EB\u30BF\u5207\u66FF\uFF08\u5168/User/Assistant\uFF09"
+                    "Toggle filter (All/User/Assistant)"
                   }
                 </td>
               </tr>
@@ -146,7 +146,7 @@ function HelpButton() {
                 </td>
                 <td className="py-0.5 align-middle">
                   {
-                    "Markdown / \u30D7\u30EC\u30FC\u30F3\u30C6\u30AD\u30B9\u30C8\u5207\u66FF"
+                    "Toggle Markdown / Plain text"
                   }
                 </td>
               </tr>
@@ -162,7 +162,7 @@ function HelpButton() {
                 </td>
                 <td className="py-0.5 align-middle">
                   {
-                    "\u30C4\u30FC\u30EB\u547C\u51FA\u306E\u8868\u793A\u5207\u66FF"
+                    "Toggle tool call display"
                   }
                 </td>
               </tr>
@@ -177,7 +177,7 @@ function HelpButton() {
                   </kbd>
                 </td>
                 <td className="py-0.5 align-middle">
-                  {"\u30B5\u30A4\u30C9\u30D0\u30FC\u5207\u66FF"}
+                  {"Toggle sidebar"}
                 </td>
               </tr>
               <tr>
@@ -191,7 +191,7 @@ function HelpButton() {
                   </kbd>
                 </td>
                 <td className="py-0.5 align-middle">
-                  {"OMO\u30D5\u30A3\u30EB\u30BF\u5207\u66FF"}
+                  {"Toggle OMO filter"}
                 </td>
               </tr>
               <tr>
@@ -214,7 +214,7 @@ function HelpButton() {
                 </td>
                 <td className="py-0.5 align-middle">
                   {
-                    "Footer \u30D1\u30CD\u30EB\u5207\u66FF\uFF08\u524D / \u6B21\uFF09"
+                    "Toggle footer panel (prev / next)"
                   }
                 </td>
               </tr>
@@ -304,7 +304,7 @@ export const ControlBar = React.memo(function ControlBar({
             <title>Collapse</title>
             <path d="M4 6l4 4 4-4" />
           </svg>
-          {"\u6298\u308A\u305F\u305F\u307F"}
+          {"Collapse"}
         </button>
 
         {separator}

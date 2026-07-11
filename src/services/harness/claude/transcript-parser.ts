@@ -231,7 +231,7 @@ function buildToolCall(
     );
     return {
       tool: QUESTION_TOOL,
-      input: `${question.questions.length}件の質問`,
+      input: `${question.questions.length} questions`,
       status: result ? (result.isError ? "error" : "completed") : "unknown",
       error: "",
       fullInput: "",

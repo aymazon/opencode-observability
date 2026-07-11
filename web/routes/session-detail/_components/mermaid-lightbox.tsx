@@ -362,7 +362,7 @@ export const MermaidLightbox = React.memo(function MermaidLightbox({
           <div className="flex items-center gap-[var(--space-sm)] flex-wrap justify-start mermaid-lightbox-actions">
             <span className="text-[var(--color-text-secondary)] text-[0.78em] font-medium mermaid-lightbox-hint">
               {
-                "\u30DB\u30A4\u30FC\u30EB\u3067\u62E1\u5927\u7E2E\u5C0F / \u30C9\u30E9\u30C3\u30B0\u3067\u79FB\u52D5"
+                "Scroll to zoom / Drag to pan"
               }
             </span>
             <span className="min-w-14 text-center font-[var(--font-mono)] text-[0.78em] text-[var(--color-text-secondary)] mermaid-lightbox-zoom">
@@ -373,7 +373,7 @@ export const MermaidLightbox = React.memo(function MermaidLightbox({
               className={cn(btnBase, "mermaid-lightbox-btn")}
               onClick={resetViewport}
             >
-              {"\u8868\u793A\u3092\u30EA\u30BB\u30C3\u30C8"}
+              {"Reset view"}
             </button>
           </div>
           <button
@@ -388,7 +388,7 @@ export const MermaidLightbox = React.memo(function MermaidLightbox({
             ref={closeButtonRef}
             onClick={onClose}
           >
-            {"\u9589\u3058\u308B"}
+            {"Close"}
           </button>
         </div>
         <div className="flex-1 min-h-0 flex mermaid-lightbox-body">
@@ -397,7 +397,7 @@ export const MermaidLightbox = React.memo(function MermaidLightbox({
               <p className="m-0 mb-[var(--space-sm)] text-[var(--color-error-text)] font-semibold">
                 Mermaid
                 {
-                  "\u56F3\u306E\u63CF\u753B\u306B\u5931\u6557\u3057\u305F\u305F\u3081\u3001\u30BD\u30FC\u30B9\u3092\u8868\u793A\u3057\u3066\u3044\u307E\u3059\u3002"
+                  "Failed to render diagram, showing source instead."
                 }
               </p>
               <pre
@@ -442,7 +442,7 @@ export const MermaidLightbox = React.memo(function MermaidLightbox({
                     "mermaid-lightbox-loading",
                   )}
                 >
-                  Mermaid{"\u56F3\u3092\u63CF\u753B\u4E2D..."}
+                  Mermaid{"Rendering diagram..."}
                 </p>
               ) : null}
               <div
