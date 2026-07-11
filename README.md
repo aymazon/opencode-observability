@@ -2,6 +2,8 @@
 
 # OpenCode Observability
 
+> Forked from [abekdwight/opencode-observability](https://github.com/abekdwight/opencode-observability). Japanese UI text reverted to English.
+
 **Local-first observability for OpenCode.**
 A live monitor, dashboard, and session viewer for your OpenCode runs — entirely on `127.0.0.1`. 🛰️
 
