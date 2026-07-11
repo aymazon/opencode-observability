@@ -2,6 +2,8 @@
 
 # OpenCode Observability
 
+> **中文本地化版本** — Forked from [abekdwight/opencode-observability](https://github.com/abekdwight/opencode-observability). 感谢原作者的开源贡献。
+
 **Local-first observability for OpenCode.**
 A live monitor, dashboard, and session viewer for your OpenCode runs — entirely on `127.0.0.1`. 🛰️
 
