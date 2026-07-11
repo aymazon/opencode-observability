@@ -43,7 +43,7 @@ const descriptor: HarnessDescriptorContract = {
   },
 };
 
-const UNTITLED = "無題のセッション";
+const UNTITLED = "Untitled session";
 
 function deriveTitle(meta: ClaudeTranscriptMeta): string {
   if (meta.title?.trim()) return meta.title.trim();

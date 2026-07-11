@@ -663,7 +663,7 @@ export function parseCodexRollout(fileContent: string): ParsedCodexRollout {
           questionIds = built.questionIds;
           call = {
             tool: QUESTION_TOOL,
-            input: `${built.question.questions.length}件の質問`,
+            input: `${built.question.questions.length} questions`,
             status: "pending",
             error: "",
             fullInput: "",

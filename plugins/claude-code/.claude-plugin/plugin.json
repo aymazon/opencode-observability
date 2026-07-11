@@ -2,7 +2,7 @@
   "name": "oc",
   "displayName": "OpenCode Observability",
   "version": "0.3.2",
-  "description": "/oc:monitor で現在の Claude Code セッションをセッションビューア (http://127.0.0.1:3737) で開く。フックがモデル実行前に処理するためトークンを消費しない。",
+  "description": "/oc:monitor opens current Claude Code session in the session viewer (http://127.0.0.1:3737). Hook runs before model execution, so it costs zero tokens.",
   "author": {
     "name": "abekdwight"
   },

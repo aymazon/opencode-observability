@@ -97,8 +97,8 @@ export const SessionTopBar = React.memo(function SessionTopBar({
               onClick={onToggleOmoFilter}
               title={
                 omoFilter
-                  ? "OMO\u30D5\u30A3\u30EB\u30BF ON\uFF08\u81EA\u52D5\u633F\u5165\u30B3\u30E1\u30F3\u30C8\u3092\u975E\u8868\u793A\uFF09"
-                  : "OMO\u30D5\u30A3\u30EB\u30BF OFF\uFF08\u3059\u3079\u3066\u8868\u793A\uFF09"
+                  ? "OMO filter ON (hide auto-inserted comments)"
+                  : "OMO filter OFF (show all)"
               }
               data-testid="btn-omo-filter"
             >
@@ -138,8 +138,8 @@ export const SessionTopBar = React.memo(function SessionTopBar({
               onClick={onToggleClaudeFilter}
               title={
                 claudeFilter
-                  ? "Claudeフィルタ ON（Claude Codeの自動通知を非表示）"
-                  : "Claudeフィルタ OFF（すべて表示）"
+                  ? "Claude filter ON (hide Claude Code auto-notifications)"
+                  : "Claude filter OFF (show all)"
               }
               data-testid="btn-claude-filter"
             >
@@ -167,8 +167,8 @@ export const SessionTopBar = React.memo(function SessionTopBar({
             type="button"
             className={copyBtnClass}
             onClick={onCopy}
-            aria-label={`${session.id} \u306E\u30B3\u30DE\u30F3\u30C9\u3092\u30B3\u30D4\u30FC`}
-            title={"\u30B3\u30DE\u30F3\u30C9\u3092\u30B3\u30D4\u30FC"}
+            aria-label={`Copy command for ${session.id}`}
+            title={"Copy command"}
             data-testid="copy-command-btn"
           >
             {copyState === "copied" ? (
@@ -230,7 +230,7 @@ export const SessionTopBar = React.memo(function SessionTopBar({
                 "hover:border-[var(--color-delete-hover)] hover:text-[var(--color-delete-hover)]",
               )}
               onClick={onDelete}
-              title={"\u30BB\u30C3\u30B7\u30E7\u30F3\u3092\u524A\u9664"}
+              title={"Delete session"}
               data-testid="delete-btn"
             >
               <svg
@@ -271,8 +271,8 @@ export const SessionTopBar = React.memo(function SessionTopBar({
             onClick={onToggleSidebar}
             title={
               sidebarOpen
-                ? "\u30B5\u30A4\u30C9\u30D0\u30FC\u3092\u9589\u3058\u308B"
-                : "\u30B5\u30A4\u30C9\u30D0\u30FC\u3092\u958B\u304F"
+                ? "Close sidebar"
+                : "Open sidebar"
             }
             data-testid="btn-sidebar-toggle"
           >

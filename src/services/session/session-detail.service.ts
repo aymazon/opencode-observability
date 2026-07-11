@@ -626,7 +626,7 @@ export function buildSessionRouteView(
         const question = buildOpenCodeQuestion(rawQuestions, answers);
         toolCall = {
           tool: toolName,
-          input: `${rawQuestions.length}件の質問`,
+          input: `${rawQuestions.length} questions`,
           status,
           error,
           fullInput: "",
@@ -737,7 +737,7 @@ export function buildSessionRouteView(
   const fileChangesStr =
     sessionInfo.summary_files > 0
       ? `${sessionInfo.summary_files} files (+${sessionInfo.summary_additions} -${sessionInfo.summary_deletions})`
-      : "なし";
+      : "None";
 
   return {
     sessionInfo,

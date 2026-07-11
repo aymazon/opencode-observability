@@ -1,6 +1,6 @@
 {
   "name": "opencode-observability",
-  "description": "OpenCode / Codex / Claude Code のセッション履歴ビューア連携プラグイン",
+  "description": "Session history viewer integration plugin for OpenCode / Codex / Claude Code",
   "owner": {
     "name": "abekdwight"
   },
@@ -8,7 +8,7 @@
     {
       "name": "oc",
       "source": "./plugins/claude-code",
-      "description": "/oc:monitor で現在の Claude Code セッションをセッションビューアで開く（フック処理・モデル不使用）",
+      "description": "/oc:monitor opens current Claude Code session in the session viewer (hook processing, no model usage)",
       "author": {
         "name": "abekdwight"
       }

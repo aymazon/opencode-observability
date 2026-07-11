@@ -1,7 +1,7 @@
 {
   "name": "opencode-observability",
   "version": "0.3.2",
-  "description": "現在の Codex セッションをセッションビューア (http://127.0.0.1:3737) で開く。フックがモデル実行前に処理するためトークンを消費しない。",
+  "description": "Open current Codex session in the session viewer (http://127.0.0.1:3737). Hook runs before model execution, so it costs zero tokens.",
   "author": {
     "name": "abekdwight"
   },

@@ -220,8 +220,8 @@ export const MessageRow = React.memo(function MessageRow({
   const showFade = effectiveCollapsed && isOverflowing;
   const showExpandBtn = !plainMode && isOverflowing;
   const expandText = effectiveCollapsed
-    ? "\u7D9A\u304D\u3092\u8868\u793A"
-    : "\u6298\u308A\u305F\u305F\u3080";
+    ? "Show more"
+    : "Collapse";
 
   return (
     <div

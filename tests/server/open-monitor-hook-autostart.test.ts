@@ -189,7 +189,7 @@ describeIf("open monitor plugin hooks", () => {
       reason: string;
     };
     expect(output.decision).toBe("block");
-    expect(output.reason).toContain("ビューアを開きました");
+    expect(output.reason).toContain("Viewer opened");
 
     await waitForFile(pidFile);
     await waitForFile(openFile);

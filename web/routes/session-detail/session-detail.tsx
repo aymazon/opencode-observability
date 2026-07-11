@@ -116,9 +116,9 @@ function usePageSwipeNavigation(actions: {
     [],
   );
 
-  // pointerup と pointercancel の両方で同じ判定を行う
-  // iOS Safari は縦スクロール開始時に pointercancel を発火し pointerup を送らないため、
-  // cancel タイミングの clientX/Y（スクロール開始直前の座標）でも swipe を判定する
+  // Evaluate swipe on both pointerup and pointercancel.
+  // iOS Safari fires pointercancel when vertical scroll starts and never sends pointerup,
+  // so we evaluate swipe using clientX/Y at cancel time (coordinates just before scroll starts).
   const evaluateSwipe = React.useCallback(
     (event: React.PointerEvent<HTMLElement>) => {
       const drag = dragRef.current;
@@ -129,8 +129,8 @@ function usePageSwipeNavigation(actions: {
       const deltaX = event.clientX - drag.startX;
       const deltaY = event.clientY - drag.startY;
       if (Math.abs(deltaX) < SWIPE_DISTANCE_THRESHOLD_PX) return;
-      // 縦ブレ許容: 横移動の 2 倍を超える縦移動があった場合のみ縦 swipe としてキャンセル
-      // （許容角 ≈ ±63度。pointercancel 経由の判定とのバランスで誤発動を抑える）
+      // Tolerance for vertical drift: only cancel as vertical swipe if vertical movement exceeds 2x horizontal.
+      // (Tolerance angle ≈ ±63°. Balanced with pointercancel-based evaluation to reduce false triggers.)
       if (Math.abs(deltaY) > Math.abs(deltaX) * 2) return;
 
       if (deltaX < 0) {
@@ -349,7 +349,7 @@ export function SessionDetailPage(): React.ReactElement | null {
     if (!data?.harness.capabilities.delete) return;
     if (
       !window.confirm(
-        "\u3053\u306E\u30BB\u30C3\u30B7\u30E7\u30F3\u3068\u30B5\u30D6\u30A8\u30FC\u30B8\u30A7\u30F3\u30C8\u30BB\u30C3\u30B7\u30E7\u30F3\u3092\u524A\u9664\u3057\u307E\u3059\u304B\uFF1F\n\u3053\u306E\u64CD\u4F5C\u306F\u53D6\u308A\u6D88\u305B\u307E\u305B\u3093\u3002",
+        "Delete this session and sub-agent sessions?\nThis action cannot be undone.",
       )
     )
       return;
@@ -366,14 +366,14 @@ export function SessionDetailPage(): React.ReactElement | null {
           error?: string;
         };
         window.alert(
-          `\u524A\u9664\u306B\u5931\u6557\u3057\u307E\u3057\u305F: ${err.error || res.statusText}`,
+          `Delete failed: ${err.error || res.statusText}`,
         );
         return;
       }
       navigate("/sessions");
     } catch (e) {
       window.alert(
-        `\u524A\u9664\u306B\u5931\u6557\u3057\u307E\u3057\u305F: ${e instanceof Error ? e.message : String(e)}`,
+        `Delete failed: ${e instanceof Error ? e.message : String(e)}`,
       );
     }
   }, [data, navigate]);

@@ -85,10 +85,10 @@ export function SessionCopyButton({
 
   const label =
     state === "copied"
-      ? `${sessionId} のコマンドをコピーしました`
+      ? `Copied command for ${sessionId}`
       : state === "error"
-        ? `${sessionId} のコピーに失敗しました`
-        : `${sessionId} のコマンドをコピー`;
+        ? `Failed to copy for ${sessionId}`
+        : `Copy command for ${sessionId}`;
 
   return (
     <button

@@ -84,7 +84,7 @@ export const MermaidCodeBlock = React.memo(function MermaidCodeBlock({
     return (
       <div>
         <p className="mermaid-error-note my-2 text-[0.83em] font-medium text-[var(--color-error-text)]">
-          Mermaid図の描画に失敗したため、ソースを表示しています。
+          Failed to render Mermaid diagram, showing source instead.
         </p>
         <CodeBlock code={code} lang="mermaid" />
       </div>
@@ -97,8 +97,8 @@ export const MermaidCodeBlock = React.memo(function MermaidCodeBlock({
       <button
         type="button"
         className="w-full rounded-xl border border-[var(--color-border-default)] bg-gradient-to-b from-[#fcfcfd] to-[#f5f5f7] p-3 text-left cursor-zoom-in transition-[border-color,box-shadow] duration-150 hover:border-[var(--color-accent)] hover:shadow-[0_0_0_2px_rgba(0,102,204,0.12)] dark:from-[var(--color-bg-elevated)] dark:to-[var(--color-bg-muted)]"
-        aria-label="クリックで拡大表示"
-        title="クリックで拡大"
+        aria-label="Click to expand"
+        title="Click to expand"
         onClick={() => setZoomSource(source)}
       >
         <div
@@ -106,7 +106,7 @@ export const MermaidCodeBlock = React.memo(function MermaidCodeBlock({
           dangerouslySetInnerHTML={{ __html: state.svg }}
         />
         <span className="block mt-2 text-[var(--color-text-secondary)] text-xs tracking-[0.02em]">
-          クリックで拡大
+          Click to expand
         </span>
       </button>
       {zoomSource ? (

@@ -98,8 +98,7 @@ export function ModelTokenConsumptionSection({
             Model Token Consumption
           </h2>
           <p className="mt-1 text-xs text-[var(--color-text-secondary)]">
-            Input / Output を円グラフで比較。Input は cache 表示の ON/OFF
-            を切替可能。
+            Compare Input / Output as pie charts. Toggle cache display for Input.
           </p>
         </div>
         <div
@@ -213,8 +212,8 @@ export function ModelTokenConsumptionSection({
             </div>
             <p className="mt-1 text-center text-xs text-[var(--color-text-tertiary)]">
               {includeCache
-                ? "内側=non-cache(実線), 外側=cache(点線リング)"
-                : "cache を除外した Input 内訳"}
+                ? "Inner=non-cache (solid), Outer=cache (dashed ring)"
+                : "Input breakdown excluding cache"}
             </p>
           </article>
 
@@ -253,7 +252,7 @@ export function ModelTokenConsumptionSection({
               </ResponsiveContainer>
             </div>
             <p className="mt-1 text-center text-xs text-[var(--color-text-tertiary)]">
-              モデル別 Output 構成
+              Output breakdown by model
             </p>
           </article>
         </div>

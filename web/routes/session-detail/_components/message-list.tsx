@@ -91,7 +91,7 @@ export function MessageList({
     return (
       <div className="flex-1 overflow-y-auto overflow-x-hidden scroll-auto overscroll-contain">
         <p className="py-10 px-[var(--space-xl)] text-center text-[var(--color-text-secondary)]">
-          {"\u30E1\u30C3\u30BB\u30FC\u30B8\u306F\u3042\u308A\u307E\u305B\u3093"}
+          {"No messages"}
         </p>
       </div>
     );
@@ -102,7 +102,7 @@ export function MessageList({
       <div className="flex-1 overflow-y-auto overflow-x-hidden scroll-auto overscroll-contain">
         <p className="py-10 px-[var(--space-xl)] text-center text-[var(--color-text-secondary)]">
           {
-            "\u8868\u793A\u3059\u308B\u30E1\u30C3\u30BB\u30FC\u30B8\u304C\u3042\u308A\u307E\u305B\u3093"
+            "No messages to display"
           }
         </p>
       </div>

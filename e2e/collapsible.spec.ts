@@ -435,15 +435,15 @@ test.describe("session detail overview", () => {
       .getByRole("button")
       .last();
     await expect(firstMessageToggle).toBeVisible();
-    await expect(firstMessageToggle).toHaveText("続きを表示");
+    await expect(firstMessageToggle).toHaveText("Show more");
 
     await firstMessageToggle.click();
     await expect(firstMessageToggle).toBeVisible();
-    await expect(firstMessageToggle).toHaveText("折りたたむ");
+    await expect(firstMessageToggle).toHaveText("Collapse");
 
     await firstMessageToggle.click();
     await expect(firstMessageToggle).toBeVisible();
-    await expect(firstMessageToggle).toHaveText("続きを表示");
+    await expect(firstMessageToggle).toHaveText("Show more");
 
     const table = page
       .getByTestId("message-1")
@@ -464,17 +464,17 @@ test.describe("session detail overview", () => {
           text: [
             "```mermaid",
             "sequenceDiagram",
-            "  participant X as 共有端末X",
-            "  participant A as スタッフA",
-            "  participant B as スタッフB",
+            "  participant X as Shared Device X",
+            "  participant A as Staff A",
+            "  participant B as Staff B",
             "  participant API as /api/device-infos/",
             "  participant DB as DeviceInfo",
-            "  A->>API: token=A用, device_id=端末X",
-            "  API->>DB: AのDeviceInfoを作成",
-            "  B->>API: token=B用, device_id=端末X",
-            "  API->>DB: device_id=端末X の既存レコードを検索",
-            "  API->>DB: AのDeviceInfoを削除",
-            "  API->>DB: BのDeviceInfoを新規作成",
+            "  A->>API: token=A, device_id=Device X",
+            "  API->>DB: Create A's DeviceInfo",
+            "  B->>API: token=B, device_id=Device X",
+            "  API->>DB: Search existing records for device_id=Device X",
+            "  API->>DB: Delete A's DeviceInfo",
+            "  API->>DB: Create B's DeviceInfo",
             "```",
           ].join("\n"),
           modelId: "gpt-4.1",
@@ -495,7 +495,7 @@ test.describe("session detail overview", () => {
 
     const mermaidPreview = page
       .getByTestId("message-0")
-      .getByRole("button", { name: "クリックで拡大表示" });
+      .getByRole("button", { name: "Click to enlarge" });
     await expect(mermaidPreview).toBeVisible();
     await expect(mermaidPreview.locator("svg")).toBeVisible();
 
@@ -540,7 +540,7 @@ test.describe("session detail overview", () => {
     const actionsBox = await lightbox
       .locator(".mermaid-lightbox-actions")
       .boundingBox();
-    const closeButton = lightbox.getByRole("button", { name: "閉じる" });
+    const closeButton = lightbox.getByRole("button", { name: "Close" });
     const closeBox = await closeButton.boundingBox();
     expect(closeBox).not.toBeNull();
     expect(actionsBox).not.toBeNull();

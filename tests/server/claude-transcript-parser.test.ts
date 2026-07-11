@@ -20,7 +20,7 @@ const SAMPLE = transcript([
     timestamp: "2026-01-01T00:00:00.000Z",
     cwd: "/repo",
     gitBranch: "main",
-    message: { role: "user", content: "こんにちは" },
+    message: { role: "user", content: "Hello" },
   },
   {
     type: "assistant",
@@ -36,8 +36,8 @@ const SAMPLE = transcript([
         cache_creation_input_tokens: 20,
       },
       content: [
-        { type: "thinking", thinking: "考える" },
-        { type: "text", text: "やります" },
+        { type: "thinking", thinking: "Thinking" },
+        { type: "text", text: "Let's do it" },
         {
           type: "tool_use",
           id: "tool-1",
@@ -48,7 +48,7 @@ const SAMPLE = transcript([
           type: "tool_use",
           id: "tool-skill",
           name: "Skill",
-          input: { skill: "database-design", args: "命名検討" },
+          input: { skill: "database-design", args: "Naming consideration" },
         },
       ],
     },
@@ -67,7 +67,7 @@ const SAMPLE = transcript([
         cache_read_input_tokens: 30,
         cache_creation_input_tokens: 20,
       },
-      content: [{ type: "text", text: "続き" }],
+      content: [{ type: "text", text: "Continuation" }],
     },
   },
   {
@@ -94,7 +94,7 @@ const SAMPLE = transcript([
       model: "claude-haiku",
       role: "assistant",
       usage: { input_tokens: 10, output_tokens: 5 },
-      content: [{ type: "text", text: "サブ作業" }],
+      content: [{ type: "text", text: "Sub-task" }],
     },
   },
   {
@@ -112,15 +112,15 @@ const SAMPLE = transcript([
           name: "TodoWrite",
           input: {
             todos: [
-              { content: "タスク1", status: "completed" },
-              { content: "タスク2", status: "pending" },
+              { content: "Task 1", status: "completed" },
+              { content: "Task 2", status: "pending" },
             ],
           },
         },
       ],
     },
   },
-  { type: "ai-title", aiTitle: "テストセッション" },
+  { type: "ai-title", aiTitle: "Test session" },
 ]);
 
 describe("claude transcript parser", () => {
@@ -172,8 +172,8 @@ describe("claude transcript parser", () => {
   test("extracts the latest TodoWrite call as todos", () => {
     const { records } = parseClaudeTranscript(SAMPLE);
     expect(extractClaudeTodos(records)).toEqual([
-      { content: "タスク1", status: "completed", priority: "" },
-      { content: "タスク2", status: "pending", priority: "" },
+      { content: "Task 1", status: "completed", priority: "" },
+      { content: "Task 2", status: "pending", priority: "" },
     ]);
   });
 
@@ -182,10 +182,10 @@ describe("claude transcript parser", () => {
     const messages = buildClaudeMessages(records, { includeThinking: true });
 
     expect(messages.map((message) => [message.role, message.text])).toEqual([
-      ["user", "こんにちは"],
-      ["assistant", "やります"],
-      ["assistant", "続き"],
-      ["assistant", "サブ作業"],
+      ["user", "Hello"],
+      ["assistant", "Let's do it"],
+      ["assistant", "Continuation"],
+      ["assistant", "Sub-task"],
       ["assistant", ""],
     ]);
 
@@ -225,17 +225,17 @@ describe("claude transcript parser", () => {
               input: {
                 questions: [
                   {
-                    header: "方針",
-                    question: "どの方針にしますか？",
+                    header: "Approach",
+                    question: "Which approach should we take?",
                     multiSelect: false,
                     options: [
-                      { label: "速度優先", description: "速い" },
-                      { label: "安全優先", description: "堅実" },
+                      { label: "Speed first", description: "Fast" },
+                      { label: "Safety first", description: "Solid" },
                     ],
                   },
                   {
-                    header: "対象",
-                    question: "対象を選んでください",
+                    header: "Target",
+                    question: "Please select a target",
                     multiSelect: true,
                     options: [
                       { label: "API", description: "" },
@@ -255,8 +255,8 @@ describe("claude transcript parser", () => {
         toolUseResult: {
           answers: {
             // String value (single select) and array value (multi select).
-            "どの方針にしますか？": "速度優先",
-            対象を選んでください: ["API", "UI"],
+            "Which approach should we take?": "Speed first",
+            "Please select a target": ["API", "UI"],
           },
         },
         message: {
@@ -265,7 +265,7 @@ describe("claude transcript parser", () => {
             {
               type: "tool_result",
               tool_use_id: "tool-q",
-              content: "ユーザーが回答しました",
+              content: "User answered",
               is_error: false,
             },
           ],
@@ -279,23 +279,23 @@ describe("claude transcript parser", () => {
     const call = messages[0].toolCalls[0];
     // AskUserQuestion is normalized to the shared "question" tool name.
     expect(call.tool).toBe("question");
-    expect(call.input).toBe("2件の質問");
+    expect(call.input).toBe("2 questions");
     expect(call.question).toEqual({
       questions: [
         {
-          header: "方針",
-          question: "どの方針にしますか？",
+          header: "Approach",
+          question: "Which approach should we take?",
           multiSelect: false,
           options: [
-            { label: "速度優先", description: "速い" },
-            { label: "安全優先", description: "堅実" },
+            { label: "Speed first", description: "Fast" },
+            { label: "Safety first", description: "Solid" },
           ],
-          selected: ["速度優先"],
+          selected: ["Speed first"],
           note: null,
         },
         {
-          header: "対象",
-          question: "対象を選んでください",
+          header: "Target",
+          question: "Please select a target",
           multiSelect: true,
           options: [
             { label: "API", description: "" },
@@ -313,7 +313,7 @@ describe("claude transcript parser", () => {
       {
         type: "user",
         timestamp: "2026-01-01T00:00:00.000Z",
-        message: { role: "user", content: "調査して" },
+        message: { role: "user", content: "Investigate" },
       },
       {
         type: "assistant",
@@ -326,7 +326,7 @@ describe("claude transcript parser", () => {
               type: "tool_use",
               id: "tool-agent",
               name: "Agent",
-              input: { description: "調査" },
+              input: { description: "Investigate" },
             },
           ],
         },
@@ -364,21 +364,21 @@ describe("claude transcript parser", () => {
       new Map([
         [
           "tool-agent",
-          [{ id: "agent-child", title: "調査", durationMs: 1234 }],
+          [{ id: "agent-child", title: "Investigate", durationMs: 1234 }],
         ],
       ]),
       { includeThinking: true },
     );
 
     expect(messages[1].subagentLinks).toEqual([
-      { id: "agent-child", title: "調査", durationMs: 1234 },
+      { id: "agent-child", title: "Investigate", durationMs: 1234 },
     ]);
   });
 
   test("extracts session metadata with deduplicated token totals", () => {
     const { records } = parseClaudeTranscript(SAMPLE);
     expect(extractClaudeMeta(records)).toEqual({
-      title: "テストセッション",
+      title: "Test session",
       cwd: "/repo",
       gitBranch: "main",
       model: "claude-fable-5",
@@ -386,7 +386,7 @@ describe("claude transcript parser", () => {
       updatedAt: "2026-01-01T00:00:09.000Z",
       tokensUsed: 217,
       messageCount: 6,
-      firstUserMessage: "こんにちは",
+      firstUserMessage: "Hello",
     });
   });
 });
